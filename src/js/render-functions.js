@@ -1,7 +1,5 @@
 "use strict"
 
-
-
 export function generateMarkup(result) {
     return result.hits.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
         return `<li>
