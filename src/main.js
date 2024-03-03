@@ -41,9 +41,10 @@ form.addEventListener("input", (event) => {
 })
 
 
-form.addEventListener("submit",async (event) => {
+form.addEventListener("submit", async (event) => {
     event.preventDefault()
     loader.classList.remove("visually-hidden")
+    page = 1
 
     gallery.innerHTML = "";
 
@@ -111,6 +112,10 @@ loadBtn.addEventListener("click", (event) => {
         const ligthbox = new SimpleLightbox(".gallery  a")
 
         ligthbox.refresh()
+
+        const elHeight = gallery.firstChild.getBoundingClientRect()
+        window.scrollBy(0, elHeight.height * 2 )
+    
 
         loadBtn.classList.remove("visually-hidden")
 
