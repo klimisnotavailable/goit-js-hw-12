@@ -16,7 +16,7 @@ const searchParams = new URLSearchParams({
     orientation: "horizontal",
     safesearch: true,
     image_type: "photo",
-    per_page:5,
+    per_page:15,
 })
 
 
@@ -31,6 +31,8 @@ import "izitoast/dist/css/iziToast.min.css";
 import axios from "axios"
 
 let page = 1;
+const ligthbox = new SimpleLightbox(".gallery  a")
+
 
 function createURL() {
     return `${BASE_URL}?key=${KEY}&q=${formInput.value}&${searchParams}&page=${page++}`
@@ -64,8 +66,6 @@ form.addEventListener("submit", async (event) => {
         }
 
         gallery.insertAdjacentHTML("beforeend", generateMarkup(data.data))
-
-        const ligthbox = new SimpleLightbox(".gallery  a")
 
         ligthbox.refresh()
     })
@@ -103,33 +103,33 @@ loadBtn.addEventListener("click", (event) => {
 
     getGallery().then((data) => {
 
-        if (data.data.hits.length == 0) {
+        if (data.data.hits.length === 0) {
             throw new Error("No such images!")
         }
 
         gallery.insertAdjacentHTML("beforeend", generateMarkup(data.data))
 
-        const ligthbox = new SimpleLightbox(".gallery  a")
-
-        ligthbox.refresh()
-
         const elHeight = gallery.firstChild.getBoundingClientRect()
-        window.scrollBy(0, elHeight.height * 2 )
-    
+        window.scrollBy(0, elHeight.height * 2)
 
+        if (data.data.hits.length < searchParams.get("per_page")) {
+            loadBtn.classList.add("visually-hidden")
+        }
+        
         loadBtn.classList.remove("visually-hidden")
 
-    })
-        
-    .catch((error) => {
+    ligthbox.refresh()
+
+
+    }).catch((error) => {
 
         iziToast.error({
             message:"We're sorry, but you've reached the end of search results.",
         })
 
-    })
-    
-    .finally(() => {
+        loadBtn.classList.add("visually-hidden")
+
+    }).finally(() => {
         
         loader.classList.add("visually-hidden")
 
