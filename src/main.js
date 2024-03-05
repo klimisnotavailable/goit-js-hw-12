@@ -78,7 +78,9 @@ form.addEventListener("submit", async (event) => {
         iziToast.error({
             message:"Sorry, there are no images matching your search query. Please try again!",
         })
-            
+        
+        loadBtn.classList.add("visually-hidden")
+
     })
         
     .finally(() => {
