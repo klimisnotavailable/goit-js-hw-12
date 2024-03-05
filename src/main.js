@@ -68,6 +68,9 @@ form.addEventListener("submit", async (event) => {
         gallery.insertAdjacentHTML("beforeend", generateMarkup(data.data))
 
         ligthbox.refresh()
+
+        loadBtn.classList.remove("visually-hidden")
+
     })
         
     .catch(error => {
@@ -81,7 +84,6 @@ form.addEventListener("submit", async (event) => {
     .finally(() => {
         
         loader.classList.add("visually-hidden")
-        loadBtn.classList.remove("visually-hidden")
 
     })
     
